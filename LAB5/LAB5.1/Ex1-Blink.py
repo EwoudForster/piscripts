@@ -15,7 +15,7 @@ wiringpi.wiringPiSetup()
 wiringpi.pinMode(pin, 1)
 
 # Main
-for i in range(0, 10):
+while True:
     blink(pin)
 
 # cleanup
