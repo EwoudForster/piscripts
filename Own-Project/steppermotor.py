@@ -32,4 +32,3 @@ def Setup():
     wiringpi.wiringPiSetup() 
     for pinStepper in stepperPins:
         wiringpi.pinMode(pinStepper, 1) 
-

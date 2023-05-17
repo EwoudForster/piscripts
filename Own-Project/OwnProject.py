@@ -63,7 +63,9 @@ def LCD():
 
 def ubeac():
     global count, status
-    iotsite.upload(status, count)
+    while True:
+        iotsite.upload(status, count)
+        time.sleep(2)
 
 
 
@@ -81,19 +83,16 @@ def program():
     while True:
         
         if status == "Off":
-            ubeac()
             led.NotCaught()
             if button.check() == "reset" or button.check() == "close" or web.checkstatus() == "arm":
                 status = "armed"
                 mouse = False  # Reset the mouse flag when arming
 
         elif status == "armed":
-            ubeac()
             if not mouse:  
                 LookingForMouse()
 
         elif status == "triggered":
-            ubeac()
             if button.check() == "reset" or web.checkstatus() == "reset":
                 Reset()
 
@@ -109,11 +108,12 @@ try:
     websetup = threading.Thread(target=web.deploy)
     main = threading.Thread(target=program)
     online = threading.Thread(target=ubeac)
-    online.start()
     screen.setup()
+    online.start()
     lcd.start()
     websetup.start()
     main.start()
+
 
 except KeyboardInterrupt:
     screen.DeactivateLCD()
